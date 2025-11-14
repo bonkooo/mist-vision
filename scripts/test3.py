@@ -44,16 +44,16 @@ sharpen_kernel = np.array([[0, -1, 0],
                            [-1, 5, -1],
                            [0, -1, 0]])
 
-def process_frame(frame_id):
-    if frame_id > frame_count:
-        return None
+def process_frame(frame):
+    #if frame_id > frame_count:
+        #return None
     
-    cap.set(cv2.CAP_PROP_POS_FRAMES, frame_id)
+    """cap.set(cv2.CAP_PROP_POS_FRAMES, frame_id)
     ret, frame = cap.read()
     if not ret:
         print("Err")
         print(f"failed to read frame at ID: {frame_id}")
-        return None
+        return None"""
 
 
     # apply filter

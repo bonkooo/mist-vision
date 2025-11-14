@@ -16,9 +16,10 @@ def index():
 def process_image():
     try:
         
-        id = int(request.form["image"])
-        print(id)
-        json_data = process_frame(id)
+        if "image" not in request.files:
+            return jsonify({"error": "No image uploaded"}), 400
+        file = request.files["image"]
+        json_data = process_frame(file)
         print(json_data, flush=True)
 
 

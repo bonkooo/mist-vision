@@ -44,7 +44,7 @@ sharpen_kernel = np.array([[0, -1, 0],
                            [-1, 5, -1],
                            [0, -1, 0]])
 
-def process_frame(frame_id):
+def process_frame(frame_id, video_id):
     if frame_id > frame_count:
         return None
     
@@ -64,9 +64,9 @@ def process_frame(frame_id):
     frame_sharp = remove_fog(resized_frame)
 
     # save the sharpened frame
-    resized_frame = cv2.resize(frame_sharp, (1200, 1000), interpolation=cv2.INTER_CUBIC)
+    #resized_frame = cv2.resize(frame_sharp, (1200, 1000), interpolation=cv2.INTER_CUBIC)
     #cv2.imwrite(img_filename, frame_sharp)
-    cv2.imwrite(img_filename, resized_frame)
+    #cv2.imwrite(img_filename, resized_frame)
     print("Saved image:", img_filename)
 
     # YOLO detection

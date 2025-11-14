@@ -1,40 +1,89 @@
 import cv2
+import json
+import os
 from ultralytics import YOLO
 import torch
+
 print(torch.__version__, torch.cuda.is_available())
 
-model = YOLO("yolo11m.pt") 
+# ----------------------------
+# CONFIG
+# ----------------------------
+VIDEO_PATH = "videos/testVideo.mp4"
+FRAME_OUTPUT = "frames"
+JSON_OUTPUT = "jsons"
+SKIP = 180
+CLASSES = [2, 5, 7]    # car, bus, truck
+MODEL_PATH = "yolo11m.pt"
+# ----------------------------
 
-video_path = "videos/testVideo.mp4"
-cap = cv2.VideoCapture(video_path)
+# Make folders
+os.makedirs(FRAME_OUTPUT, exist_ok=True)
+os.makedirs(JSON_OUTPUT, exist_ok=True)
+
+# Load model
+model = YOLO(MODEL_PATH)
+
+# Open video
+cap = cv2.VideoCapture(VIDEO_PATH)
+
+if not cap.isOpened():
+    print("❌ ERROR: Could not open video.")
+    exit()
+
 frame_id = 0
+save_id = 0
 
 while True:
     ret, frame = cap.read()
     if not ret:
+        print("End of video or cannot read frame.")
         break
 
-    if frame_id % 5 != 0:
-        frame_id += 1
-        continue
+    # Only process every SKIP-th frame
+    if frame_id % SKIP == 0:
+        # -------------------------
+        # 1️⃣ Save image frame
+        # -------------------------
+        img_filename = f"frame_{save_id:04d}.jpg"
+        img_path = os.path.join(FRAME_OUTPUT, img_filename)
+        cv2.imwrite(img_path, frame)
+        print("Saved image:", img_path)
 
-    results = model(frame, classes=[2, 5, 7])  
-    # COCO klase:
-    # 2 = car, 5 = bus, 7 = truck
+        # -------------------------
+        # 2️⃣ Run YOLO
+        # -------------------------
+        results = model(frame, classes=CLASSES)
+        detections = results[0]
 
-    annotated_frame = results[0].plot()
+        objs = []
 
-    #cv2.imshow("Detekcija vozila", annotated_frame)
-    scale = 0.3  # 0.5 = 50%, 0.3 = 30%, 1.0 = original
+        for box in detections.boxes:
+            x1, y1, x2, y2 = box.xyxy[0].cpu().numpy().tolist()
 
-    small_frame = cv2.resize(annotated_frame, None, fx=scale, fy=scale)
-    cv2.imshow("Video", small_frame)
+            objs.append({
+                "class": model.names[int(box.cls[0])],
+                "confidence": float(box.conf[0]),
+                "x": float(x1),
+                "y": float(y1),
+                "width": float(x2 - x1),
+                "height": float(y2 - y1)
+            })
+
+        # -------------------------
+        # 3️⃣ Save JSON
+        # -------------------------
+        json_filename = f"frame_{save_id:04d}.json"
+        json_path = os.path.join(JSON_OUTPUT, json_filename)
+
+        with open(json_path, "w") as f:
+            json.dump(objs, f, indent=4)
+
+        print("Saved JSON:", json_path)
+
+        save_id += 1
+
     frame_id += 1
 
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
-
 cap.release()
-
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+print("\n🎉 Done! Total frames saved:", save_id)

@@ -1,0 +1,66 @@
+[
+    {
+        "class": "car",
+        "confidence": 0.89,
+        "x": 684.73,
+        "y": 684.73,
+        "width": 684.73,
+        "height": 684.73
+    },
+    {
+        "class": "car",
+        "confidence": 0.88,
+        "x": 950.17,
+        "y": 950.17,
+        "width": 950.17,
+        "height": 950.17
+    },
+    {
+        "class": "car",
+        "confidence": 0.76,
+        "x": 805.47,
+        "y": 805.47,
+        "width": 805.47,
+        "height": 805.47
+    },
+    {
+        "class": "car",
+        "confidence": 0.64,
+        "x": 654.37,
+        "y": 654.37,
+        "width": 654.37,
+        "height": 654.37
+    },
+    {
+        "class": "car",
+        "confidence": 0.57,
+        "x": 577.87,
+        "y": 577.87,
+        "width": 577.87,
+        "height": 577.87
+    },
+    {
+        "class": "person",
+        "confidence": 0.46,
+        "x": 304.85,
+        "y": 304.85,
+        "width": 304.85,
+        "height": 304.85
+    },
+    {
+        "class": "car",
+        "confidence": 0.44,
+        "x": 774.94,
+        "y": 774.94,
+        "width": 774.94,
+        "height": 774.94
+    },
+    {
+        "class": "car",
+        "confidence": 0.44,
+        "x": 187.05,
+        "y": 187.05,
+        "width": 187.05,
+        "height": 187.05
+    }
+]

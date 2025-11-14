@@ -16,13 +16,10 @@ def index():
 def process_image():
     try:
         
-        if "image" not in request.files:
-            return jsonify({"error": "No image uploaded"}), 400
-        file = request.files["image"]
-        json_data = process_frame(file)
-        print(json_data, flush=True)
-
-
+        id = int(request.form["image"])
+        print(id)
+        json_data = process_frame(id)
+        print(json_data)
         return jsonify(json_data)
 
     except Exception as e:
@@ -30,4 +27,4 @@ def process_image():
     
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="127.0.0.1", port=5000, debug=True)

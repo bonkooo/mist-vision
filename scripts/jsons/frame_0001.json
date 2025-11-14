@@ -1,0 +1,45 @@
+{
+    "frame_order": 60,
+    "detections": [
+        {
+            "class": "car",
+            "confidence": 0.662,
+            "x": 1781.26,
+            "y": 492.22,
+            "width": 83.51,
+            "height": 65.57
+        },
+        {
+            "class": "car",
+            "confidence": 0.634,
+            "x": 1937.75,
+            "y": 485.04,
+            "width": 75.17,
+            "height": 66.17
+        },
+        {
+            "class": "car",
+            "confidence": 0.375,
+            "x": 24.87,
+            "y": 644.32,
+            "width": 349.49,
+            "height": 117.05
+        },
+        {
+            "class": "truck",
+            "confidence": 0.327,
+            "x": 0.43,
+            "y": 525.51,
+            "width": 79.13,
+            "height": 138.16
+        },
+        {
+            "class": "car",
+            "confidence": 0.262,
+            "x": 26.88,
+            "y": 647.28,
+            "width": 249.82,
+            "height": 110.61
+        }
+    ]
+}

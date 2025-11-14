@@ -66,7 +66,7 @@ while frame_id < frame_count:
     results = model(frame_sharp, classes=CLASSES_TO_DETECT)
     detections = results[0]
 
-    objs = []
+    detections_list = []
     for box in detections.boxes:
         xyxy = box.xyxy[0].cpu().numpy().tolist()
         x1, y1, x2, y2 = xyxy
@@ -76,7 +76,7 @@ while frame_id < frame_count:
         class_name = model.names[cls_id]
         conf = float(box.conf[0])
 
-        objs.append({
+        detections_list.append({
             "class": class_name,
             "confidence": round(conf, 3),
             "x": round(float(x1), 2),
@@ -85,11 +85,17 @@ while frame_id < frame_count:
             "height": round(float(height), 2)
         })
 
-    # save as JSON
+    # Save JSON with frame order and nested detections
+    json_data = {
+        "frame_order": frame_id,
+        "detections": detections_list
+    }
+
     json_filename = os.path.join(OUTPUT_JSON_FOLDER, f"frame_{save_id:04d}.json")
     with open(json_filename, "w") as f:
-        json.dump(objs, f, indent=4)
+        json.dump(json_data, f, indent=4)
     print("Saved JSON:", json_filename)
+
 
     save_id += 1
     frame_id += FRAME_SKIP  # jump to next frame to save

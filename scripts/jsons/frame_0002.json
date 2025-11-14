@@ -1,0 +1,29 @@
+{
+    "frame_order": 120,
+    "detections": [
+        {
+            "class": "car",
+            "confidence": 0.905,
+            "x": 0.93,
+            "y": 607.15,
+            "width": 1099.09,
+            "height": 730.54
+        },
+        {
+            "class": "car",
+            "confidence": 0.798,
+            "x": 1801.52,
+            "y": 498.28,
+            "width": 128.13,
+            "height": 113.99
+        },
+        {
+            "class": "car",
+            "confidence": 0.643,
+            "x": 1688.96,
+            "y": 499.57,
+            "width": 68.43,
+            "height": 52.19
+        }
+    ]
+}

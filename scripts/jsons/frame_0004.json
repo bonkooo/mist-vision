@@ -1,0 +1,53 @@
+{
+    "frame_order": 240,
+    "detections": [
+        {
+            "class": "car",
+            "confidence": 0.854,
+            "x": 1220.11,
+            "y": 491.44,
+            "width": 308.17,
+            "height": 208.23
+        },
+        {
+            "class": "car",
+            "confidence": 0.802,
+            "x": 1804.47,
+            "y": 486.93,
+            "width": 173.1,
+            "height": 144.29
+        },
+        {
+            "class": "car",
+            "confidence": 0.679,
+            "x": 1702.46,
+            "y": 467.64,
+            "width": 66.61,
+            "height": 49.18
+        },
+        {
+            "class": "car",
+            "confidence": 0.518,
+            "x": 507.07,
+            "y": 589.55,
+            "width": 216.07,
+            "height": 74.11
+        },
+        {
+            "class": "car",
+            "confidence": 0.296,
+            "x": 769.51,
+            "y": 578.69,
+            "width": 108.38,
+            "height": 39.73
+        },
+        {
+            "class": "car",
+            "confidence": 0.259,
+            "x": 1830.77,
+            "y": 464.98,
+            "width": 59.48,
+            "height": 42.91
+        }
+    ]
+}

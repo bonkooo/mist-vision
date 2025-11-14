@@ -3,43 +3,27 @@
     "detections": [
         {
             "class": "car",
-            "confidence": 0.662,
-            "x": 1781.26,
-            "y": 492.22,
-            "width": 83.51,
-            "height": 65.57
+            "confidence": 0.593,
+            "x": 151.08,
+            "y": 45.52,
+            "width": 6.55,
+            "height": 5.25
         },
         {
             "class": "car",
-            "confidence": 0.634,
-            "x": 1937.75,
-            "y": 485.04,
-            "width": 75.17,
-            "height": 66.17
+            "confidence": 0.575,
+            "x": 139.34,
+            "y": 45.61,
+            "width": 6.52,
+            "height": 5.79
         },
         {
             "class": "car",
-            "confidence": 0.375,
-            "x": 24.87,
-            "y": 644.32,
-            "width": 349.49,
-            "height": 117.05
-        },
-        {
-            "class": "truck",
-            "confidence": 0.327,
-            "x": 0.43,
-            "y": 525.51,
-            "width": 79.13,
-            "height": 138.16
-        },
-        {
-            "class": "car",
-            "confidence": 0.262,
-            "x": 26.88,
-            "y": 647.28,
-            "width": 249.82,
-            "height": 110.61
+            "confidence": 0.272,
+            "x": 1.86,
+            "y": 59.58,
+            "width": 19.71,
+            "height": 9.91
         }
     ]
 }

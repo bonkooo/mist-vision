@@ -3,11 +3,35 @@
     "detections": [
         {
             "class": "car",
-            "confidence": 0.716,
-            "x": 1848.31,
-            "y": 496.72,
-            "width": 79.15,
-            "height": 67.7
+            "confidence": 0.57,
+            "x": 77.51,
+            "y": 113.05,
+            "width": 147.51,
+            "height": 24.58
+        },
+        {
+            "class": "car",
+            "confidence": 0.528,
+            "x": 144.38,
+            "y": 46.05,
+            "width": 6.51,
+            "height": 6.23
+        },
+        {
+            "class": "car",
+            "confidence": 0.334,
+            "x": 156.76,
+            "y": 45.28,
+            "width": 5.05,
+            "height": 3.98
+        },
+        {
+            "class": "car",
+            "confidence": 0.282,
+            "x": 50.18,
+            "y": 53.56,
+            "width": 12.55,
+            "height": 6.16
         }
     ]
 }

@@ -37,6 +37,7 @@ print("total frames in video:", frame_count)
 
 frame_id = 0
 save_id = 0
+img_size = (300,200)
 
 # simple matrix for the sharpening filter
 sharpen_kernel = np.array([[0, -1, 0],
@@ -55,11 +56,13 @@ while frame_id < frame_count:
     #frame_sharp = cv2.filter2D(frame, -1, sharpen_kernel)
     img1_filename = os.path.join(OUTPUT_IMG_FOLDER, f"frame_test_{save_id:04d}.jpg")
     img_filename = os.path.join(OUTPUT_IMG_FOLDER, f"frame_{save_id:04d}.jpg")
-    resized_frame = cv2.resize(frame, (500,300), interpolation=cv2.INTER_AREA)
+    resized_frame = cv2.resize(frame, img_size, interpolation=cv2.INTER_AREA)
     frame_sharp = remove_fog(resized_frame)
 
     # save the sharpened frame
-    cv2.imwrite(img_filename, frame_sharp)
+    resized_frame = cv2.resize(frame_sharp, (1200, 1000), interpolation=cv2.INTER_CUBIC)
+    #cv2.imwrite(img_filename, frame_sharp)
+    cv2.imwrite(img_filename, resized_frame)
     print("Saved image:", img_filename)
 
     # YOLO detection

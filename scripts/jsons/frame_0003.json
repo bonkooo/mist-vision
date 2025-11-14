@@ -3,43 +3,35 @@
     "detections": [
         {
             "class": "car",
-            "confidence": 0.805,
-            "x": 1821.67,
-            "y": 487.65,
-            "width": 172.13,
-            "height": 154.16
+            "confidence": 0.675,
+            "x": 142.02,
+            "y": 44.79,
+            "width": 13.63,
+            "height": 14.15
         },
         {
             "class": "car",
-            "confidence": 0.665,
-            "x": 1509.16,
-            "y": 491.0,
-            "width": 97.05,
-            "height": 73.04
+            "confidence": 0.613,
+            "x": 117.74,
+            "y": 45.39,
+            "width": 8.06,
+            "height": 6.7
         },
         {
             "class": "car",
-            "confidence": 0.598,
-            "x": 1777.18,
-            "y": 481.19,
-            "width": 76.38,
-            "height": 69.96
+            "confidence": 0.502,
+            "x": 55.95,
+            "y": 51.13,
+            "width": 15.16,
+            "height": 6.63
         },
         {
             "class": "car",
-            "confidence": 0.335,
-            "x": 712.43,
-            "y": 559.57,
-            "width": 196.84,
-            "height": 70.28
-        },
-        {
-            "class": "car",
-            "confidence": 0.289,
-            "x": 1739.47,
-            "y": 472.7,
-            "width": 48.05,
-            "height": 37.21
+            "confidence": 0.467,
+            "x": 138.72,
+            "y": 44.11,
+            "width": 5.93,
+            "height": 6.54
         }
     ]
 }

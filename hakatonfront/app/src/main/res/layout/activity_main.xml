@@ -6,42 +6,95 @@
     android:padding="16dp"
     android:background="#101010">
 
-    <!-- Camera buttons -->
+    <!-- Top App Bar with Logo and Hamburger -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="8dp">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/logo"
+            android:contentDescription="App Logo"
+            android:layout_gravity="start"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <ImageView
+            android:id="@+id/menuIcon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/hamburger"
+            android:contentDescription="Menu Icon"
+            android:layout_gravity="end"/>
+    </LinearLayout>
+
+    <!-- Divider Line -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#444444"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Camera buttons with weather icon -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
+        <!-- Cam buttons -->
         <Button
             android:id="@+id/btnCam1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Cam 1" />
+            android:text="Cam 1"
+            android:layout_marginEnd="8dp"/>
 
         <Button
             android:id="@+id/btnCam2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Cam 2" />
+            android:text="Cam 2"
+            android:layout_marginEnd="8dp"/>
 
         <Button
             android:id="@+id/btnCam3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Cam 3" />
+            android:text="Cam 3"
+            android:layout_marginEnd="8dp"/>
 
         <Button
             android:id="@+id/btnCam4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Cam 4" />
+            android:text="Cam 4"
+            android:layout_marginEnd="8dp"/>
+
+        <!-- Weather icon -->
+        <ImageView
+            android:id="@+id/weatherIcon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/fog"
+            android:contentDescription="Weather Icon"/>
     </LinearLayout>
+
+
 
     <!-- Video -->
     <VideoView
@@ -52,15 +105,7 @@
         android:background="#222222"
         android:layout_marginTop="12dp"/>
 
-    <!-- Weather icon (default fog) -->
-    <ImageView
-        android:id="@+id/weatherIcon"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_gravity="center"
-        android:src="@drawable/fog"
-        android:contentDescription="Weather Icon"
-        android:layout_marginTop="12dp"/>
+    
 
     <!-- Start simulation button -->
     <Button

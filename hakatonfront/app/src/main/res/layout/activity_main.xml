@@ -4,11 +4,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:gravity=""
     android:background="#101010">
 
+    <!-- Camera buttons -->
     <LinearLayout
-        android:layout_width="341dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:gravity="center"
@@ -43,21 +43,30 @@
             android:text="Cam 4" />
     </LinearLayout>
 
-
+    <!-- Video -->
     <VideoView
         android:id="@+id/mainVideoView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="#222222"/>
+        android:background="#222222"
+        android:layout_marginTop="12dp"/>
 
+    <!-- Weather icon (default fog) -->
+    <ImageView
+        android:id="@+id/weatherIcon"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_gravity="center"
+        android:src="@drawable/fog"
+        android:contentDescription="Weather Icon"
+        android:layout_marginTop="12dp"/>
 
-
+    <!-- Start simulation button -->
     <Button
         android:id="@+id/btnSelectVideo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Start simulation"
         android:layout_marginTop="12dp"/>
-
 </LinearLayout>

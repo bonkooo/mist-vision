@@ -19,7 +19,9 @@ def process_image():
         id = int(request.form["image"])
         print(id)
         json_data = process_frame(id)
-        print(json_data)
+        print(json_data, flush=True)
+
+
         return jsonify(json_data)
 
     except Exception as e:
@@ -27,4 +29,4 @@ def process_image():
     
 
 if __name__ == "__main__":
-    app.run(host="127.0.0.1", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)

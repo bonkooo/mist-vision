@@ -4,3 +4,7 @@ videos/
 scripts/__pycache__/gf.cpython-310.pyc
 /scripts/__pycache__
 scripts/testVideo.mp4
+/scripts/jsons
+/scripts/frames
+*.jpg
+scripts/frames/frame_0000.jpg

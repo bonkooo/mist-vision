@@ -44,12 +44,16 @@ sharpen_kernel = np.array([[0, -1, 0],
                            [-1, 5, -1],
                            [0, -1, 0]])
 
-while frame_id < frame_count:
+def process_frame(frame_id):
+    if frame_id > frame_count:
+        return None
+    
     cap.set(cv2.CAP_PROP_POS_FRAMES, frame_id)
     ret, frame = cap.read()
     if not ret:
+        print("Err")
         print(f"failed to read frame at ID: {frame_id}")
-        break
+        return None
 
 
     # apply filter
@@ -82,10 +86,10 @@ while frame_id < frame_count:
         detections_list.append({
             "class": class_name,
             "confidence": round(conf, 3),
-            "x": round(float(x1), 2),
-            "y": round(float(y1), 2),
-            "width": round(float(width), 2),
-            "height": round(float(height), 2)
+            "x": round(float(x1)/img_size[0], 2),
+            "y": round(float(y1)/img_size[1], 2),
+            "width": round(float(width)/img_size[0], 2),
+            "height": round(float(height)/img_size[1], 2)
         })
 
     # Save JSON with frame order and nested detections
@@ -99,9 +103,9 @@ while frame_id < frame_count:
         json.dump(json_data, f, indent=4)
     print("Saved JSON:", json_filename)
 
+    return json_data
+    #save_id += 1
+    #frame_id += FRAME_SKIP  # jump to next frame to save
 
-    save_id += 1
-    frame_id += FRAME_SKIP  # jump to next frame to save
-
-cap.release()
-print("finished")
+#cap.release()
+#print("finished")

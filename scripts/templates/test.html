@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Haze Removal Test</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        img { max-width: 500px; margin-top: 10px; display: block; }
+        input[type="number"] { width: 80px; }
+    </style>
+</head>
+<body>
+    <h1>Haze Removal Test</h1>
+
+    <form id="uploadForm">
+        <label>Frame: <input type="number" id="imageInput" required></label><br><br>
+
+        <button type="submit">Process Image</button>
+    </form>
+
+    <h2>Result</h2>
+    <img id="resultImage" src="" alt="Processed Image">
+
+    <script>
+        const form = document.getElementById('uploadForm');
+        const resultImg = document.getElementById('resultImage');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const fileInput = document.getElementById('imageInput').value;
+            const formData = new FormData();
+            formData.append("image", fileInput);
+            try {
+                const response = await fetch("http://127.0.0.1:5000/process", {
+                    method: "POST",
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    const err = await response.json();
+                    alert("Error: " + err.error);
+                    return;
+                }
+
+                // Assuming backend returns JSON with Base64
+                const data = await response.json();
+                console.log(data)
+
+            } catch (err) {
+                console.error(err);
+                alert("Request failed: " + err);
+            }
+        });
+    </script>
+</body>
+</html>

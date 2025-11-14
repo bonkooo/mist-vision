@@ -1,0 +1,13 @@
+{
+    "frame_order": 0,
+    "detections": [
+        {
+            "class": "car",
+            "confidence": 0.716,
+            "x": 1848.31,
+            "y": 496.72,
+            "width": 79.15,
+            "height": 67.7
+        }
+    ]
+}

@@ -2,6 +2,7 @@ package com.mammoot.hakatonfront;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.VideoView;
@@ -12,10 +13,13 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.activity.EdgeToEdge;
 
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity {
 
     private VideoView videoView;
     private ImageView weatherIcon;
+    private ImageView dangerIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +49,29 @@ public class MainActivity extends AppCompatActivity {
 
         // Weather icon
         weatherIcon = findViewById(R.id.weatherIcon);
+        dangerIcon = findViewById(R.id.dangerIcon);
 
         // ovo je hardcodovano za sad
         setWeatherIcon("fog");
+<<<<<<< HEAD
+        Log.d("MainActivity", "Ja sam Djole 2");
+        for(int i = 0; i < 10; i++) {
+            ApiClient.processImage(i, new ApiClient.Callback() {
+                @Override
+                public void onSuccess(Map<String, Object> json) {
+                    Log.d("MainActivity", "Response: " + json.toString());
+                }
+
+                @Override
+                public void onError(String error) {
+                    Log.e("MainActivity", "Error: " + error);
+                }
+            });
+        }
+=======
+        setDanger(true);
+
+>>>>>>> 07f2615c9d93fc9a2bee859e7072251b48056294
     }
 
     private void setWeatherIcon(String weather) {
@@ -70,4 +94,15 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
+
+    public void setDanger(boolean isDanger) {
+        if (isDanger) {
+            dangerIcon.setVisibility(ImageView.VISIBLE);
+        } else {
+            dangerIcon.setVisibility(ImageView.GONE);
+        }
+    }
 }
+
+
+

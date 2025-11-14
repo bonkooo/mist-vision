@@ -5,8 +5,9 @@ from ultralytics import YOLO
 import torch
 import sys
 import numpy as np
+from haze_removal import remove_fog
 
-VIDEO_PATH = r"C:\Users\User\Desktop\rivian\rivian-hakaton\videos\testVideo.mp4"
+VIDEO_PATH = r"testVideo.mp4"
 OUTPUT_IMG_FOLDER = "frames"
 OUTPUT_JSON_FOLDER = "jsons"
 FRAME_SKIP = 60              
@@ -51,10 +52,13 @@ while frame_id < frame_count:
 
 
     # apply filter
-    frame_sharp = cv2.filter2D(frame, -1, sharpen_kernel)
+    #frame_sharp = cv2.filter2D(frame, -1, sharpen_kernel)
+    img1_filename = os.path.join(OUTPUT_IMG_FOLDER, f"frame_test_{save_id:04d}.jpg")
+    img_filename = os.path.join(OUTPUT_IMG_FOLDER, f"frame_{save_id:04d}.jpg")
+    resized_frame = cv2.resize(frame, (500,300), interpolation=cv2.INTER_AREA)
+    frame_sharp = remove_fog(resized_frame)
 
     # save the sharpened frame
-    img_filename = os.path.join(OUTPUT_IMG_FOLDER, f"frame_{save_id:04d}.jpg")
     cv2.imwrite(img_filename, frame_sharp)
     print("Saved image:", img_filename)
 

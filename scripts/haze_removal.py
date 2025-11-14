@@ -3,7 +3,6 @@ import skimage.io as io
 import numpy as np
 import time
 from gf import guided_filter
-from numba import jit
 import matplotlib.pyplot as plt
 
 class HazeRemoval(object):
@@ -19,7 +18,14 @@ class HazeRemoval(object):
         self.Alight = np.zeros((3), dtype=np.double)
         self.tran = np.zeros((self.rows, self.cols), dtype=np.double)
         self.dst = np.zeros_like(self.src, dtype=np.double)
-        
+    def set_image(self, img):
+        self.src = np.array(img).astype(np.double)/255.
+        # self.gray = np.array(img.convert('L'))
+        self.rows, self.cols, _ = self.src.shape
+        self.dark = np.zeros((self.rows, self.cols), dtype=np.double)
+        self.Alight = np.zeros((3), dtype=np.double)
+        self.tran = np.zeros((self.rows, self.cols), dtype=np.double)
+        self.dst = np.zeros_like(self.src, dtype=np.double)     
 
     def get_dark_channel(self, radius=7):
         print("Starting to compute dark channel prior...")
@@ -90,6 +96,16 @@ class HazeRemoval(object):
         io.imsave("test.jpg", self.dst)
 
 
+def remove_fog(image):
+    hr = HazeRemoval()
+    hr.set_image(image)
+    hr.get_dark_channel()
+    hr.get_air_light()
+    hr.get_transmission()
+    hr.guided_filter()
+    hr.recover()
+    #hr.show()
+    return hr.dst
 
 if __name__ == '__main__':
     import sys
@@ -101,5 +117,6 @@ if __name__ == '__main__':
     hr.guided_filter()
     hr.recover()
     hr.show()
+
 
     

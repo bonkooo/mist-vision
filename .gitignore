@@ -1,1 +1,6 @@
 videos/
+/scripts/frames
+/scripts/jsons
+scripts/__pycache__/gf.cpython-310.pyc
+/scripts/__pycache__
+scripts/testVideo.mp4

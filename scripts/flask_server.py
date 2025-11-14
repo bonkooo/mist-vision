@@ -15,7 +15,6 @@ def index():
 @app.route("/process", methods=["POST"])
 def process_image():
     try:
-        
         id = int(request.form["image"])
         print(id)
         json_data = process_frame(id)

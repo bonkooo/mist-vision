@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
 
         // ovo je hardcodovano za sad
         setWeatherIcon("fog");
-<<<<<<< HEAD
         Log.d("MainActivity", "Ja sam Djole 2");
         for(int i = 0; i < 10; i++) {
             ApiClient.processImage(i, new ApiClient.Callback() {
@@ -68,10 +67,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
-=======
         setDanger(true);
-
->>>>>>> 07f2615c9d93fc9a2bee859e7072251b48056294
     }
 
     private void setWeatherIcon(String weather) {

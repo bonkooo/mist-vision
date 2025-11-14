@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     private VideoView videoView;
     private ImageView weatherIcon;
+    private ImageView dangerIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +46,12 @@ public class MainActivity extends AppCompatActivity {
 
         // Weather icon
         weatherIcon = findViewById(R.id.weatherIcon);
+        dangerIcon = findViewById(R.id.dangerIcon);
 
         // ovo je hardcodovano za sad
         setWeatherIcon("fog");
+        setDanger(true);
+
     }
 
     private void setWeatherIcon(String weather) {
@@ -70,4 +74,15 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
+
+    public void setDanger(boolean isDanger) {
+        if (isDanger) {
+            dangerIcon.setVisibility(ImageView.VISIBLE);
+        } else {
+            dangerIcon.setVisibility(ImageView.GONE);
+        }
+    }
 }
+
+
+

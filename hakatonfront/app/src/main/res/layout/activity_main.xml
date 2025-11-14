@@ -114,4 +114,16 @@
         android:layout_height="wrap_content"
         android:text="Start simulation"
         android:layout_marginTop="12dp"/>
+
+    <!-- Danger icon (hidden by default) -->
+    <ImageView
+        android:id="@+id/dangerIcon"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_gravity="center"
+        android:src="@drawable/danger"
+        android:contentDescription="Danger Icon"
+        android:visibility="gone"
+        android:layout_marginTop="12dp"/>
+
 </LinearLayout>

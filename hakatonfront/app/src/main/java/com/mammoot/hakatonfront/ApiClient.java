@@ -7,7 +7,9 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
+import okhttp3.ConnectionPool;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -67,5 +69,27 @@ public class ApiClient {
                 }
             }
         }.execute(imageId);
+    }
+
+    public static Map<String, Object> processImageSync(int imageId) throws IOException {
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectionPool(new ConnectionPool(0, 1, TimeUnit.SECONDS)) // no reuse
+                .retryOnConnectionFailure(true)
+                .build();
+        RequestBody formBody = new FormBody.Builder()
+                .add("image", String.valueOf(imageId))
+                .build();
+
+        Request request = new Request.Builder()
+                .url(BASE_URL + "/process")
+                .post(formBody)
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            if (!response.isSuccessful()) throw new IOException("Unexpected code: " + response);
+            String jsonString = response.body().string();
+            Gson gson = new Gson();
+            return gson.fromJson(jsonString, Map.class);
+        }
     }
 }

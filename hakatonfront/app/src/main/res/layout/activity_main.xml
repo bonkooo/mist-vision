@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -94,18 +95,22 @@
             android:contentDescription="Weather Icon"/>
     </LinearLayout>
 
-
-
-    <!-- Video -->
-    <VideoView
-        android:id="@+id/mainVideoView"
+    <!-- Video + Overlay container -->
+    <FrameLayout
+        android:id="@+id/videoContainer"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="#222222ff"
-        android:layout_marginTop="12dp"/>
+        android:layout_marginTop="12dp">
 
-    
+        <VideoView
+            android:id="@+id/mainVideoView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#222222"/>
+
+        <!-- OverlayView will be added programmatically here -->
+    </FrameLayout>
 
     <!-- Start simulation button -->
     <Button
@@ -125,5 +130,4 @@
         android:contentDescription="Danger Icon"
         android:visibility="gone"
         android:layout_marginTop="12dp"/>
-
 </LinearLayout>

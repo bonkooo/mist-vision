@@ -14,13 +14,19 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.activity.EdgeToEdge;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    private VideoView videoView;
+    VideoView videoView;
+    Timer timer;
+    OverlayView overlayView;
     private ImageView weatherIcon;
     private ImageView dangerIcon;
+
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,42 +41,40 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+        // Initialize views
         videoView = findViewById(R.id.mainVideoView);
+        overlayView = new OverlayView(this); // temporary; we will add to layout manually
+        weatherIcon = findViewById(R.id.weatherIcon);
+        dangerIcon = findViewById(R.id.dangerIcon);
 
-        // Setup media controller
+        // Setup MediaController
         MediaController mediaController = new MediaController(this);
         mediaController.setAnchorView(videoView);
         videoView.setMediaController(mediaController);
 
-        // Set video from raw resources
+        // Play video from raw resources
+        timer = new Timer();
         String uriPath = "android.resource://" + getPackageName() + "/" + R.raw.testvideo;
-
         Uri uri = Uri.parse(uriPath);
         videoView.setVideoURI(uri);
         videoView.start();
+        timer.start();
         videoView.setBackgroundColor(Color.TRANSPARENT);
 
-        // Weather icon
-        weatherIcon = findViewById(R.id.weatherIcon);
-        dangerIcon = findViewById(R.id.dangerIcon);
-
-        // ovo je hardcodovano za sad
+        // Set initial weather icon
         setWeatherIcon("fog");
-        Log.d("MainActivity", "Ja sam Djole 2");
-        for(int i = 0; i < 10; i++) {
-            ApiClient.processImage(i, new ApiClient.Callback() {
-                @Override
-                public void onSuccess(Map<String, Object> json) {
-                    Log.d("MainActivity", "Response: " + json.toString());
-                }
 
-                @Override
-                public void onError(String error) {
-                    Log.e("MainActivity", "Error: " + error);
-                }
-            });
-        }
+        // Show danger icon
         setDanger(true);
+
+        // Add OverlayView on top of VideoView
+        ((android.widget.FrameLayout) findViewById(R.id.mainVideoView).getParent()).addView(overlayView);
+
+        // Simulate detections
+        //simulateDetections();
+        ProcessingThread processingThread = new ProcessingThread(this);
+        processingThread.start();
+        Log.d("MyTag", "Playing");
     }
 
     private void setWeatherIcon(String weather) {
@@ -87,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
             case "cloudy/overcast":
                 weatherIcon.setImageResource(R.drawable.cloudy);
                 break;
-            case "foggy/hazy": // default magla
+            case "foggy/hazy":
             default:
                 weatherIcon.setImageResource(R.drawable.fog);
                 break;
@@ -95,13 +99,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setDanger(boolean isDanger) {
-        if (isDanger) {
-            dangerIcon.setVisibility(ImageView.VISIBLE);
-        } else {
-            dangerIcon.setVisibility(ImageView.GONE);
-        }
+        dangerIcon.setVisibility(isDanger ? ImageView.VISIBLE : ImageView.GONE);
+    }
+
+    // Simulated detection for demo purposes
+    private void simulateDetections() {
+        new Thread(() -> {
+            try {
+                for (int i = 0; i < 20; i++) {
+                    List<Detection> detections = new ArrayList<>();
+                    detections.add(new Detection("car", 0.9, 100 + i*5, 150, 120, 60));
+                    detections.add(new Detection("person", 0.8, 300, 200 + i*3, 50, 100));
+
+                    runOnUiThread(() -> overlayView.setDetections(detections));
+
+                    Thread.sleep(500); // refresh every 0.5s
+                }
+            } catch (InterruptedException e) {
+                Log.e(TAG, "Simulation interrupted", e);
+            }
+        }).start();
     }
 }
-
-
-

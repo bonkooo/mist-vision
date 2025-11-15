@@ -156,12 +156,12 @@ class HazeRemoval(object):
 def remove_fog(image):
     hr = HazeRemoval()
     hr.set_image(image)
-    hr.get_dark_channel()
+    hr.get_dark_channel_fast()
     hr.get_air_light()
     #hr.get_transmission()
     hr.compute_tran()
     hr.guided_filter()
-    hr.recover()
+    hr.new_recover()
     hr.show()
     return hr.dst
 

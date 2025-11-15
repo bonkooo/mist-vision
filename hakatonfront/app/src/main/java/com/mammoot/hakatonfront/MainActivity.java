@@ -1,5 +1,6 @@
 package com.mammoot.hakatonfront;
 
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -43,9 +44,11 @@ public class MainActivity extends AppCompatActivity {
 
         // Set video from raw resources
         String uriPath = "android.resource://" + getPackageName() + "/" + R.raw.testvideo;
+
         Uri uri = Uri.parse(uriPath);
         videoView.setVideoURI(uri);
         videoView.start();
+        videoView.setBackgroundColor(Color.TRANSPARENT);
 
         // Weather icon
         weatherIcon = findViewById(R.id.weatherIcon);

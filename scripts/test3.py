@@ -44,7 +44,7 @@ sharpen_kernel = np.array([[0, -1, 0],
                            [-1, 5, -1],
                            [0, -1, 0]])
 
-def process_frame(frame_id, video_id):
+def process_frame(frame_id, video_id=0):
     if frame_id > frame_count:
         return None
     

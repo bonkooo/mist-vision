@@ -2,11 +2,13 @@ import PIL.Image as Image
 import skimage.io as io
 import numpy as np
 import time
-from gf import guided_filter
+from gf import guided_filter, guided_filter_new
 import matplotlib.pyplot as plt
+from scipy.ndimage import minimum_filter, uniform_filter
 
 class HazeRemoval(object):
     def __init__(self, omega=0.95, t0=0.1, radius=7, r=20, eps=0.001):
+        self.eps = eps
         pass
 
     def open_image(self, img_path):
@@ -40,6 +42,21 @@ class HazeRemoval(object):
                 self.dark[i,j] = tmp[rmin:rmax+1,cmin:cmax+1].min()
         print("time:",time.time()-start)
 
+    def get_dark_channel_fast(self, radius=7):
+        """
+        Compute dark channel prior in a fully vectorized way using a minimum filter.
+        """
+        print("Starting to compute dark channel prior...")
+        start = time.time()
+
+        # Per-pixel minimum over color channels -> 2D
+        tmp = self.src.min(axis=2)
+
+        # Apply local minimum filter with window size (2*radius+1)
+        self.dark = minimum_filter(tmp, size=2*radius+1, mode='nearest')
+
+        print("time:", time.time() - start)
+
     def get_air_light(self):
         print("Starting to compute air light prior...")
         start = time.time()
@@ -66,11 +83,26 @@ class HazeRemoval(object):
                 self.tran[i,j] = 1. - omega * pixel
         print("time:",time.time()-start)
 
-    def guided_filter(self, r=60, eps=0.001):
+    def compute_tran(self, radius=7, omega=0.95):
+    # local minimum in a (2*radius+1) window
+        print("Starting to compute transmission...")
+        start = time.time()
+        # Compute per-pixel minimum across channels (2D)
+        dark_channel = self.src.min(axis=2)
+
+        # Apply local minimum filter
+        local_min = minimum_filter(dark_channel, size=2*radius+1, mode='nearest')
+
+        # Transmission map
+        self.tran = 1.0 - omega * local_min
+        print("time:",time.time()-start)
+
+    def guided_filter(self, r=60):
         print("Starting to compute guided filter trainsmission...")
         start = time.time()
-        self.gtran = guided_filter(self.src, self.tran, r, eps)
+        self.gtran = guided_filter_new(self.src, self.tran, r, self.eps)
         print("time:",time.time()-start)
+
 
     def recover(self, t0=0.1):
         print("Starting recovering...")
@@ -85,6 +117,31 @@ class HazeRemoval(object):
         self.dst = self.dst.astype(np.uint8)
         print("time:",time.time()-start)
 
+    def new_recover(self, t0=0.1):
+        """
+        Recover haze-free image from source, transmission map, and airlight
+        """
+        print("Starting recovering...")
+        start = time.time()
+
+        # Ensure t has a minimum value
+        gtran = np.maximum(self.gtran, t0)  # shape: (H, W) or (H, W, 1) or (H, W, 3)
+
+        # Broadcast gtran to match src shape
+        if gtran.ndim == 2:  # grayscale transmission
+            t = np.repeat(gtran[:, :, np.newaxis], 3, axis=2)
+        elif gtran.shape[2] == 1:  # single-channel transmission
+            t = np.repeat(gtran, 3, axis=2)
+        else:  # multi-channel transmission matches src already
+            t = gtran
+
+        # Recover the haze-free image
+        self.dst = (self.src.astype(np.float64) - self.Alight) / t + self.Alight
+
+        # Clip and scale to 0-255
+        self.dst = np.clip(self.dst * 255, 0, 255).astype(np.uint8)
+
+        print("time:", time.time() - start)
     def show(self):
         import cv2
         cv2.imwrite("img/src.jpg", (self.src*255).astype(np.uint8)[:,:,(2,1,0)])
@@ -101,21 +158,23 @@ def remove_fog(image):
     hr.set_image(image)
     hr.get_dark_channel()
     hr.get_air_light()
-    hr.get_transmission()
+    #hr.get_transmission()
+    hr.compute_tran()
     hr.guided_filter()
     hr.recover()
-    #hr.show()
+    hr.show()
     return hr.dst
 
 if __name__ == '__main__':
     import sys
     hr = HazeRemoval()
     hr.open_image(sys.argv[1])
-    hr.get_dark_channel()
+    hr.get_dark_channel_fast()
     hr.get_air_light()
-    hr.get_transmission()
+    #hr.get_transmission()
+    hr.compute_tran()
     hr.guided_filter()
-    hr.recover()
+    hr.new_recover()
     hr.show()
 
 

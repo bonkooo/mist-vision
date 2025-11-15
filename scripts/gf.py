@@ -1,7 +1,7 @@
 import numpy as np
 import scipy as sp
 import scipy.ndimage
-
+from scipy.ndimage import  uniform_filter
 
 def box(img, r):
     """ O(1) box filter
@@ -169,6 +169,57 @@ def guided_filter(I, p, r, eps, s=None):
         out[:,:,ch] = _gf_colorgray(I, p3[:,:,ch], r, eps, s)
     return np.squeeze(out) if p.ndim == 2 else out
 
+def guided_filter_new(I, p, r=60, eps=0.001, s=None):
+    """
+    Vectorized guided filter for grayscale or color images.
+    Parameters
+    ----------
+    I : np.ndarray
+        Guide image, shape (H,W) or (H,W,3)
+    p : np.ndarray
+        Filtering input, shape (H,W) or (H,W,3)
+    r : int
+        Window radius
+    eps : float
+        Regularization parameter
+    s : int, optional
+        Subsampling factor (ignored in this version)
+    """
+    # Ensure 3D
+    if p.ndim == 2:
+        p3 = p[:, :, np.newaxis]
+    else:
+        p3 = p
+
+    if I.ndim == 2:
+        I3 = I[:, :, np.newaxis]
+    else:
+        I3 = I
+
+    h, w, c = p3.shape
+    out = np.zeros_like(p3)
+
+    win_size = 2*r + 1
+
+    # Compute mean and variance
+    mean_I = uniform_filter(I3, size=(win_size, win_size, 1), mode='reflect')
+    mean_p = uniform_filter(p3, size=(win_size, win_size, 1), mode='reflect')
+    mean_Ip = uniform_filter(I3 * p3, size=(win_size, win_size, 1), mode='reflect')
+    cov_Ip = mean_Ip - mean_I * mean_p
+
+    mean_II = uniform_filter(I3 * I3, size=(win_size, win_size, 1), mode='reflect')
+    var_I = mean_II - mean_I * mean_I
+
+    a = cov_Ip / (var_I + eps)
+    b = mean_p - a * mean_I
+
+    mean_a = uniform_filter(a, size=(win_size, win_size, 1), mode='reflect')
+    mean_b = uniform_filter(b, size=(win_size, win_size, 1), mode='reflect')
+
+    out = mean_a * I3 + mean_b
+
+    # Return shape matches p3: (H, W) or (H, W, C)
+    return np.squeeze(out)
 
 def test_gf():
     import imageio

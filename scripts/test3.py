@@ -37,7 +37,7 @@ print("total frames in video:", frame_count)
 
 frame_id = 0
 save_id = 0
-img_size = (300,200)
+img_size = (600,400)
 
 # simple matrix for the sharpening filter
 sharpen_kernel = np.array([[0, -1, 0],

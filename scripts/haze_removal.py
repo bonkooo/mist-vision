@@ -5,6 +5,7 @@ import time
 from gf import guided_filter, guided_filter_new
 import matplotlib.pyplot as plt
 from scipy.ndimage import minimum_filter, uniform_filter
+import cv2
 
 class HazeRemoval(object):
     def __init__(self, omega=0.95, t0=0.1, radius=7, r=20, eps=0.001):
@@ -143,7 +144,6 @@ class HazeRemoval(object):
 
         print("time:", time.time() - start)
     def show(self):
-        import cv2
         cv2.imwrite("img/src.jpg", (self.src*255).astype(np.uint8)[:,:,(2,1,0)])
         cv2.imwrite("img/dark.jpg", (self.dark*255).astype(np.uint8))
         cv2.imwrite("img/tran.jpg", (self.tran*255).astype(np.uint8))
@@ -156,12 +156,12 @@ class HazeRemoval(object):
 def remove_fog(image):
     hr = HazeRemoval()
     hr.set_image(image)
-    hr.get_dark_channel()
+    hr.get_dark_channel_fast()
     hr.get_air_light()
     #hr.get_transmission()
     hr.compute_tran()
     hr.guided_filter()
-    hr.recover()
+    hr.new_recover()
     hr.show()
     return hr.dst
 

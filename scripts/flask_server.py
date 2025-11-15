@@ -16,9 +16,7 @@ def index():
 def process_image():
     try:
         id = int(request.form["image"])
-        print(id)
         json_data = process_frame(id)
-        print(json_data)
         return jsonify(json_data)
 
     except Exception as e:

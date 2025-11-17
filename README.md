@@ -1,3 +1,7 @@
+Documentation – MistVision
+Problem:
+Driving in unfavorable weather conditions such as fog, when visibility is reduced and additional driver assistance is needed to maintain driving quality and safety.
+
 Solution
 Step 1
 
